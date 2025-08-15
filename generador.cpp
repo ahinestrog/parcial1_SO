@@ -102,8 +102,16 @@ Persona generarPersona() {
     double patrimonio = randomDouble(0, 2000000000);       // 0 a 2,000M COP
     double deudas = randomDouble(0, patrimonio * 0.7);     // Deudas hasta el 70% del patrimonio
     bool declarante = (ingresos > 50000000) && (rand() % 100 > 30); // Probabilidad 70% si ingresos > 50M
+    char calendarioDeclaracion; // Determinado por los últimos dos dígitos del ID
+    if(std::stoi(id.substr(id.length()-2, 2)) < 40) {
+        calendarioDeclaracion = 'A';
+    } else if(std::stoi(id.substr(id.length()-2, 2)) < 80) {
+        calendarioDeclaracion = 'B';
+    } else {
+        calendarioDeclaracion = 'C';
+    }
     
-    return Persona(nombre, apellido, id, ciudad, fecha, ingresos, patrimonio, deudas, declarante);
+    return Persona(nombre, apellido, id, ciudad, fecha, ingresos, patrimonio, deudas, declarante, calendarioDeclaracion);
 }
 
 /**
