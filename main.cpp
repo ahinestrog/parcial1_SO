@@ -19,9 +19,11 @@ void mostrarMenu() {
     std::cout << "\n1. Mostrar resumen de todas las personas";
     std::cout << "\n2. Mostrar detalle completo por índice";
     std::cout << "\n3. Buscar persona por ID";
-    std::cout << "\n4. Mostrar estadísticas de rendimiento";
-    std::cout << "\n5. Exportar estadísticas a CSV";
-    std::cout << "\n6. Salir";
+    std::cout << "\n4. Buscar persona más longeva por ciudad";
+    std::cout << "\n5. Buscar persona persona más longeva";
+    std::cout << "\n6. Mostrar estadísticas de rendimiento";
+    std::cout << "\n7. Exportar estadísticas a CSV";
+    std::cout << "\n8. Salir";
     std::cout << "\nSeleccione una opción: ";
 }
 
@@ -50,6 +52,7 @@ int main() {
         size_t tam = 0;
         int indice;
         std::string idBusqueda;
+        std::string ciudadBusqueda;
         
         // Iniciar medición de tiempo y memoria para la operación actual
         monitor.iniciar_tiempo();
@@ -151,16 +154,55 @@ int main() {
                 monitor.registrar("Buscar por ID", tiempo_busqueda, memoria_busqueda);
                 break;
             }
+
+            case 4: { // Buscar persona más longeva por ciudad
+                if (!personas || personas->empty()) {
+                    std::cout << "\nNo hay datos disponibles. Use opción 0 primero.\n";
+                    break;
+                }
                 
-            case 4: // Mostrar estadísticas de rendimiento
+                std::cout << "\nIngrese la ciudad a buscar persona más longeva: ";
+                std::cin >> ciudadBusqueda;
+                
+                if(const Persona* encontrada = buscarLongevaCiudad(*personas, ciudadBusqueda)) {
+                    encontrada->mostrar();
+                } else {
+                    std::cout << "No se encontró persona más longeva en " << ciudadBusqueda << "\n";
+                }
+                
+                double tiempo_busqueda = monitor.detener_tiempo();
+                long memoria_busqueda = monitor.obtener_memoria() - memoria_inicio;
+                monitor.registrar("Buscar persona más longeva ciudad", tiempo_busqueda, memoria_busqueda);
+                break;
+            }
+
+            case 5: { // Buscar persona más longeva
+                if (!personas || personas->empty()) {
+                    std::cout << "\nNo hay datos disponibles. Use opción 0 primero.\n";
+                    break;
+                }
+                
+                if(const Persona* encontrada = buscarLongevaPais(*personas)) {
+                    encontrada->mostrar();
+                } else {
+                    std::cout << "No se encontró persona más longeva \n";
+                }
+                
+                double tiempo_busqueda = monitor.detener_tiempo();
+                long memoria_busqueda = monitor.obtener_memoria() - memoria_inicio;
+                monitor.registrar("Buscar por ID", tiempo_busqueda, memoria_busqueda);
+                break;
+            }
+                
+            case 6: // Mostrar estadísticas de rendimiento
                 monitor.mostrar_resumen();
                 break;
                 
-            case 5: // Exportar estadísticas a CSV
+            case 7: // Exportar estadísticas a CSV
                 monitor.exportar_csv();
                 break;
                 
-            case 6: // Salir
+            case 8: // Salir
                 std::cout << "Saliendo...\n";
                 break;
                 
@@ -168,14 +210,14 @@ int main() {
                 std::cout << "Opción inválida!\n";
         }
         
-        // Mostrar estadísticas de la operación (excepto para opciones 4,5,6)
-        if (opcion >= 0 && opcion <= 3) {
+        // Mostrar estadísticas de la operación (excepto para opciones 6,7,8)
+        if (opcion >= 0 && opcion <= 5) {
             double tiempo = monitor.detener_tiempo();
             long memoria = monitor.obtener_memoria() - memoria_inicio;
             monitor.mostrar_estadistica("Opción " + std::to_string(opcion), tiempo, memoria);
         }
         
-    } while(opcion != 6);
+    } while(opcion != 8);
     
     return 0;
 }

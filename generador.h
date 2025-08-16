@@ -64,4 +64,8 @@ std::vector<Persona> generarColeccion(int n);
  */
 const Persona* buscarPorID(const std::vector<Persona>& personas, const std::string& id);
 
+const Persona* buscarLongevaCiudad(const std::vector<Persona>& personas, const std::string& ciudad);
+
+const Persona* buscarLongevaPais(const std::vector<Persona>& personas);
+
 #endif // GENERADOR_H
