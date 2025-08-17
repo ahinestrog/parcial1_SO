@@ -156,23 +156,17 @@ const Persona* buscarLongevaCiudad(const std::vector<Persona>& personas, const s
     const Persona* longeva = nullptr;
     int mayorEdad = -1;
 
-    auto it = std::find_if(personas.begin(), personas.end(), [&](const Persona& p) {
-        if (p.getCiudadNacimiento() == ciudad) {
+    for (const Persona& p: personas){
+        if (p.getCiudadNacimiento() == ciudad){
             std::string fecha = p.getFechaNacimiento();
-            int anio = std::stoi(fecha.substr(fecha.rfind('/') + 1)); //Toma solo el año de la cadena de la fecha de nacimiento
+            int anio = std::stoi(fecha.substr(fecha.rfind('/') + 1));
             int edad = 2025 - anio;
-            if (edad > mayorEdad) {
+
+            if (edad > mayorEdad){
                 mayorEdad = edad;
                 longeva = &p;
             }
         }
-        return false; // find_if sigue buscando, solo actualiza longeva y mayoredad
-    });
-
-    if (it != personas.end()) {
-        return &(*it); // Devuelve puntero a la persona encontrada
-    } else {
-        return nullptr; // No encontrado
     }
     
     return longeva;    
@@ -183,22 +177,15 @@ const Persona* buscarLongevaPais(const std::vector<Persona>& personas){
     const Persona* longeva = nullptr;
     int mayorEdad = -1;
 
-    auto it = std::find_if(personas.begin(), personas.end(), [&](const Persona& p) {
+    for (const Persona& p: personas){
         std::string fecha = p.getFechaNacimiento();
-        int anio = std::stoi(fecha.substr(fecha.rfind('/') + 1)); //Toma solo el año de la cadena de la fecha de nacimiento
+        int anio = std::stoi(fecha.substr(fecha.rfind('/') + 1));
         int edad = 2025 - anio;
+
         if (edad > mayorEdad) {
             mayorEdad = edad;
             longeva = &p;
         }
-        
-        return false; 
-    });
-
-    if (it != personas.end()) {
-        return &(*it); // Devuelve puntero a la persona encontrada
-    } else {
-        return nullptr; // No encontrado
     }
 
     return longeva;    
