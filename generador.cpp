@@ -193,6 +193,62 @@ const Persona* buscarLongevaPais(const std::vector<Persona>& personas){
     return longeva;    
 }
 
+//Persona con mayor patrimonio
+const Persona* mayorpatrimonioPais(const std::vector<Persona>& personas){
+    const Persona* patrimonio = nullptr;
+    int mayorPatrimonio = -1;
+
+    for (const Persona& p: personas) {
+        double npatrimonio = p.getPatrimonio();
+        
+        if (npatrimonio > mayorPatrimonio){
+            mayorPatrimonio = npatrimonio;
+            patrimonio = &p;
+        }
+    }
+
+    return patrimonio;
+}
+
+// Persona con mayor patrimonio por ciudad
+const Persona* mayorpatrimonioCiudad(const std::vector<Persona>& personas, const std::string ciudad){
+    const Persona* patrimonio = nullptr;
+    int mayorPatrimonio = -1;
+
+    for (const Persona& p: personas) {
+        if ( ciudad == p.getCiudadNacimiento()){
+            double npatrimonio = p.getPatrimonio();
+            if (npatrimonio > mayorPatrimonio){
+                mayorPatrimonio = npatrimonio;
+                patrimonio = &p;
+            }
+
+        }
+    }
+
+    return patrimonio;
+}
+
+
+// Persona con mayor patrimonio por grupo declaración de renta
+const Persona* mayorpatrimonioRenta(const std::vector<Persona>& personas, const char calendarioRenta){
+    const Persona* patrimonio = nullptr;
+    int mayorPatrimonio = -1;
+
+    for (const Persona& p: personas) {
+        if ( calendarioRenta == p.getCalendarioDeclaracion()){
+            double npatrimonio = p.getPatrimonio();
+            if (npatrimonio > mayorPatrimonio){
+                mayorPatrimonio = npatrimonio;
+                patrimonio = &p;
+            }
+
+        }
+    }
+
+    return patrimonio;
+}
+
 
 // Contar y listar personas según calendario
 std::map<char, std::vector<const Persona*>> listarPersonasPorCalendario(const std::vector<Persona>& personas) {

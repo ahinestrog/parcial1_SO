@@ -22,9 +22,12 @@ void mostrarMenu() {
     std::cout << "\n4. Buscar persona más longeva por ciudad";
     std::cout << "\n5. Buscar persona persona más longeva";
     std::cout << "\n6. Listar y contar personas por calendario";
-    std::cout << "\n7. Mostrar estadísticas de rendimiento";
-    std::cout << "\n8. Exportar estadísticas a CSV";
-    std::cout << "\n9. Salir";
+    std::cout << "\n7. Mayor patrimonio en el país";
+    std::cout << "\n8. Mayor patrimonio por ciudad";
+    std::cout << "\n9. Mayor patrimonio por grupo de declaración";
+    std::cout << "\n10. Mostrar estadísticas de rendimiento";
+    std::cout << "\n11. Exportar estadísticas a CSV";
+    std::cout << "\n12. Salir";
     std::cout << "\nSeleccione una opción: ";
 }
 
@@ -54,6 +57,7 @@ int main() {
         int indice;
         std::string idBusqueda;
         std::string ciudadBusqueda;
+        char grupoCalendario;
         
         // Iniciar medición de tiempo y memoria para la operación actual
         monitor.iniciar_tiempo();
@@ -191,7 +195,7 @@ int main() {
                 
                 double tiempo_busqueda = monitor.detener_tiempo();
                 long memoria_busqueda = monitor.obtener_memoria() - memoria_inicio;
-                monitor.registrar("Buscar por ID", tiempo_busqueda, memoria_busqueda);
+                monitor.registrar("Buscar persona más longeva", tiempo_busqueda, memoria_busqueda);
                 break;
             }
 
@@ -213,19 +217,80 @@ int main() {
 
                 double tiempo_busqueda = monitor.detener_tiempo();
                 long memoria_busqueda = monitor.obtener_memoria() - memoria_inicio;
+                monitor.registrar("Listar y contar calendario renta", tiempo_busqueda, memoria_busqueda);
+                break;
+            }
+            
+            case 7: { // Patrimonio por pais
+                if (!personas || personas->empty()) {
+                    std::cout << "\nNo hay datos disponibles. Use opción 0 primero.\n";
+                    break;
+                }
+                
+                if(const Persona* encontrada = mayorpatrimonioPais(*personas)) {
+                    encontrada->mostrar();
+                } else {
+                    std::cout << "No se encontró persona con mayor patrimonio \n";
+                }
+
+                double tiempo_busqueda = monitor.detener_tiempo();
+                long memoria_busqueda = monitor.obtener_memoria() - memoria_inicio;
                 monitor.registrar("Buscar por ID", tiempo_busqueda, memoria_busqueda);
                 break;
             }
+
+
+            case 8: { // Patrimonio por ciudad
+                if (!personas || personas->empty()) {
+                    std::cout << "\nNo hay datos disponibles. Use opción 0 primero.\n";
+                    break;
+                }
+
+                std::cout << "\nIngrese la ciudad a buscar persona con mayor patrimonio: ";
+                std::cin >> ciudadBusqueda;
                 
-            case 7: // Mostrar estadísticas de rendimiento
+                if(const Persona* encontrada = mayorpatrimonioCiudad(*personas, ciudadBusqueda)) {
+                    encontrada->mostrar();
+                } else {
+                    std::cout << "No se encontró persona mayor patrimonio en la ciudad:" << ciudadBusqueda << "\n";
+                }
+
+                double tiempo_busqueda = monitor.detener_tiempo();
+                long memoria_busqueda = monitor.obtener_memoria() - memoria_inicio;
+                monitor.registrar("Buscar persona con mayor patrimonio por ciudad", tiempo_busqueda, memoria_busqueda);
+                break;
+            }
+
+            case 9: { // Patrimonio por calendario de declaración de renta
+                if (!personas || personas->empty()) {
+                    std::cout << "\nNo hay datos disponibles. Use opción 0 primero.\n";
+                    break;
+                }
+
+                std::cout << "\nIngrese el grupo para buscar la persona con mayor patrimonio: ";
+                std::cin >> grupoCalendario;
+                
+                if(const Persona* encontrada = mayorpatrimonioRenta(*personas, grupoCalendario)) {
+                    encontrada->mostrar();
+                } else {
+                    std::cout << "No se encontró persona mayor patrimonio en la ciudad:" << ciudadBusqueda << "\n";
+                }
+
+                double tiempo_busqueda = monitor.detener_tiempo();
+                long memoria_busqueda = monitor.obtener_memoria() - memoria_inicio;
+                monitor.registrar("Buscar persona con mayor patrimonio por ciudad", tiempo_busqueda, memoria_busqueda);
+                break;
+            }
+
+            case 10: // Mostrar estadísticas de rendimiento
                 monitor.mostrar_resumen();
                 break;
                 
-            case 8: // Exportar estadísticas a CSV
+            case 11: // Exportar estadísticas a CSV
                 monitor.exportar_csv();
                 break;
                 
-            case 9: // Salir
+            case 12: // Salir
                 std::cout << "Saliendo...\n";
                 break;
                 
@@ -233,14 +298,14 @@ int main() {
                 std::cout << "Opción inválida!\n";
         }
         
-        // Mostrar estadísticas de la operación (excepto para opciones 7,8,9)
-        if (opcion >= 0 && opcion <= 6) {
+        // Mostrar estadísticas de la operación
+        if (opcion >= 0 && opcion <= 9) {
             double tiempo = monitor.detener_tiempo();
             long memoria = monitor.obtener_memoria() - memoria_inicio;
             monitor.mostrar_estadistica("Opción " + std::to_string(opcion), tiempo, memoria);
         }
         
-    } while(opcion != 9);
+    } while(opcion != 12);
     
     return 0;
 }

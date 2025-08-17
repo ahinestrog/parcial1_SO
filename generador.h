@@ -71,4 +71,10 @@ const Persona* buscarLongevaPais(const std::vector<Persona>& personas);
 
 std::map<char, std::vector<const Persona*>> listarPersonasPorCalendario(const std::vector<Persona>& personas);
 
+const Persona* mayorpatrimonioPais(const std::vector<Persona>& personas);
+
+const Persona* mayorpatrimonioCiudad(const std::vector<Persona>& personas, const std::string ciudad);
+
+const Persona* mayorpatrimonioRenta(const std::vector<Persona>& personas, const char calendarioRenta);
+
 #endif // GENERADOR_H
