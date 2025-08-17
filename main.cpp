@@ -25,9 +25,12 @@ void mostrarMenu() {
     std::cout << "\n7. Mayor patrimonio en el país";
     std::cout << "\n8. Mayor patrimonio por ciudad";
     std::cout << "\n9. Mayor patrimonio por grupo de declaración";
-    std::cout << "\n10. Mostrar estadísticas de rendimiento";
-    std::cout << "\n11. Exportar estadísticas a CSV";
-    std::cout << "\n12. Salir";
+    std::cout << "\n10. Ciudad con mayores declarantes";
+    std::cout << "\n11. Promedio de ingresos declarantes por calendario";
+    std::cout << "\n12. Edad promedio de las personas por ciudad de nacimiento";
+    std::cout << "\n13. Mostrar estadísticas de rendimiento";
+    std::cout << "\n14. Exportar estadísticas a CSV";
+    std::cout << "\n15. Salir";
     std::cout << "\nSeleccione una opción: ";
 }
 
@@ -282,15 +285,81 @@ int main() {
                 break;
             }
 
-            case 10: // Mostrar estadísticas de rendimiento
+            case 10: { // Ciudad con mayores declarantes
+                if (!personas || personas->empty()) {
+                    std::cout << "\nNo hay datos disponibles. Use opción 0 primero.\n";
+                    break;
+                }
+
+                std::cout << "\nIngrese el grupo para buscar la ciudad con mayores declarantes: ";
+                std::cin >> grupoCalendario;
+                
+                const std::string encontrada = ciudadMayorDeclarantesCalendario(*personas, grupoCalendario);
+                if (!encontrada.empty()) {
+                    std::cout << "Ciudad con más declarantes en el grupo " << grupoCalendario << ": " << encontrada << "\n";
+                } else {
+                    std::cout << "No se encontró ciudad con declarantes en el grupo: " << grupoCalendario << "\n";
+                }
+
+                double tiempo_busqueda = monitor.detener_tiempo();
+                long memoria_busqueda = monitor.obtener_memoria() - memoria_inicio;
+                monitor.registrar("Buscar ciudad con mayores declarantes", tiempo_busqueda, memoria_busqueda);
+                break;
+            }
+
+            case 11: { // Promedio de ingresos declarantes por calendario
+                if (!personas || personas->empty()) {
+                    std::cout << "\nNo hay datos disponibles. Use opción 0 primero.\n";
+                    break;
+                }
+
+                std::cout << "\nIngrese el grupo para buscar el promedio de ingresos de los declarantes: ";
+                std::cin >> grupoCalendario;
+                
+                const double encontrada = promedioIngresosCalendario(*personas, grupoCalendario);
+                if (encontrada) {
+                    std::cout << "Promedio de ingresos de los declarantes en el grupo " << grupoCalendario << ": " << encontrada << "\n";
+                } else {
+                    std::cout << "No se encontró promedio de ingresos en el grupo: " << grupoCalendario << "\n";
+                }
+
+                double tiempo_busqueda = monitor.detener_tiempo();
+                long memoria_busqueda = monitor.obtener_memoria() - memoria_inicio;
+                monitor.registrar("Buscar promedio de ingresos por grupo", tiempo_busqueda, memoria_busqueda);
+                break;
+            }
+
+            case 12: { // Edad promedio de las personas por ciudad de nacimiento
+                if (!personas || personas->empty()) {
+                    std::cout << "\nNo hay datos disponibles. Use opción 0 primero.\n";
+                    break;
+                }
+
+                std::cout << "\nIngrese la ciudad para ver la edad promedio de las personas nacidas allí: ";
+                std::cin >> ciudadBusqueda;
+                
+                const double encontrada = promedioEdadesCiudad(*personas, ciudadBusqueda);
+                if (encontrada) {
+                    std::cout << "Promedio de edades en la ciudad " << ciudadBusqueda << ": " << encontrada << "\n";
+                } else {
+                    std::cout << "No se encontró promedio de edades la ciudad: " << ciudadBusqueda << "\n";
+                }
+
+                double tiempo_busqueda = monitor.detener_tiempo();
+                long memoria_busqueda = monitor.obtener_memoria() - memoria_inicio;
+                monitor.registrar("Buscar ciudad con mayores declarantes", tiempo_busqueda, memoria_busqueda);
+                break;
+            }
+
+            case 13: // Mostrar estadísticas de rendimiento
                 monitor.mostrar_resumen();
                 break;
                 
-            case 11: // Exportar estadísticas a CSV
+            case 14: // Exportar estadísticas a CSV
                 monitor.exportar_csv();
                 break;
                 
-            case 12: // Salir
+            case 15: // Salir
                 std::cout << "Saliendo...\n";
                 break;
                 
@@ -299,13 +368,13 @@ int main() {
         }
         
         // Mostrar estadísticas de la operación
-        if (opcion >= 0 && opcion <= 9) {
+        if (opcion >= 0 && opcion <= 12) {
             double tiempo = monitor.detener_tiempo();
             long memoria = monitor.obtener_memoria() - memoria_inicio;
             monitor.mostrar_estadistica("Opción " + std::to_string(opcion), tiempo, memoria);
         }
         
-    } while(opcion != 12);
+    } while(opcion != 15);
     
     return 0;
 }

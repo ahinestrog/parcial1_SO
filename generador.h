@@ -77,4 +77,10 @@ const Persona* mayorpatrimonioCiudad(const std::vector<Persona>& personas, const
 
 const Persona* mayorpatrimonioRenta(const std::vector<Persona>& personas, const char calendarioRenta);
 
+std::string ciudadMayorDeclarantesCalendario(const std::vector<Persona>& personas, const char calendarioRenta);
+
+double promedioIngresosCalendario(const std::vector<Persona>& personas, const char calendarioRenta);
+
+double promedioEdadesCiudad(const std::vector<Persona>& personas, const std::string ciudad);
+
 #endif // GENERADOR_H

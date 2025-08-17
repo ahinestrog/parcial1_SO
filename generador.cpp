@@ -261,3 +261,61 @@ std::map<char, std::vector<const Persona*>> listarPersonasPorCalendario(const st
 
     return calendarioMap;
 }
+
+// Ciudad con mayor número de declarantes en un calendario específico
+std::string ciudadMayorDeclarantesCalendario(const std::vector<Persona>& personas, const char calendarioRenta) {
+    std::map<std::string, int> contadorCiudades;
+
+    for (const Persona& p : personas) {
+        if (p.getCalendarioDeclaracion() == calendarioRenta && p.getDeclaranteRenta()) {
+            contadorCiudades[p.getCiudadNacimiento()]++; // Cada que se aparezca una clave de ciudad (ej. bogotá) suma 1 (un declarante más), sino, crea la clave de ciudad
+        }
+    }
+
+    std::string ciudadMayor;
+    int maxDeclarantes = -1;
+    for (const auto& par : contadorCiudades) {
+        if (par.second > maxDeclarantes) {
+            maxDeclarantes = par.second;
+            ciudadMayor = par.first;
+        }
+    }
+
+    return ciudadMayor;
+}
+
+
+// Promedio de ingresos por calendario de declaración
+double promedioIngresosCalendario(const std::vector<Persona>& personas, const char calendarioRenta) {
+    double sumaIngresos = 0.0;
+    int contador = 0;
+
+    for (const Persona& p : personas) {
+        if (p.getCalendarioDeclaracion() == calendarioRenta && p.getDeclaranteRenta()) {
+            sumaIngresos += p.getIngresosAnuales();
+            contador++;
+        }
+    }
+
+    return (contador > 0) ? (sumaIngresos / contador) : 0.0;
+}
+
+
+// Edad promedio de las personas por ciudad de nacimiento
+double promedioEdadesCiudad(const std::vector<Persona>& personas, const std::string ciudad){
+    double contadorEdades = 0.0;
+    int contador = 0;
+
+    for (const Persona& p : personas) {
+        if (p.getCiudadNacimiento() == ciudad) {
+            std::string fecha = p.getFechaNacimiento();
+            int anio = std::stoi(fecha.substr(fecha.rfind('/') + 1));
+            int edad = 2025 - anio;
+
+            contadorEdades += edad;
+            contador++;
+        }
+    }
+
+    return (contador > 0) ? (contadorEdades / contador) : 0.0;
+}
