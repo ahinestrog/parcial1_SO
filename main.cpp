@@ -21,9 +21,10 @@ void mostrarMenu() {
     std::cout << "\n3. Buscar persona por ID";
     std::cout << "\n4. Buscar persona más longeva por ciudad";
     std::cout << "\n5. Buscar persona persona más longeva";
-    std::cout << "\n6. Mostrar estadísticas de rendimiento";
-    std::cout << "\n7. Exportar estadísticas a CSV";
-    std::cout << "\n8. Salir";
+    std::cout << "\n6. Listar y contar personas por calendario";
+    std::cout << "\n7. Mostrar estadísticas de rendimiento";
+    std::cout << "\n8. Exportar estadísticas a CSV";
+    std::cout << "\n9. Salir";
     std::cout << "\nSeleccione una opción: ";
 }
 
@@ -193,16 +194,38 @@ int main() {
                 monitor.registrar("Buscar por ID", tiempo_busqueda, memoria_busqueda);
                 break;
             }
+
+            case 6: { // Listar y contar por calendario renta
+                if (!personas || personas->empty()) {
+                    std::cout << "\nNo hay datos disponibles. Use opción 0 primero.\n";
+                    break;
+                }
                 
-            case 6: // Mostrar estadísticas de rendimiento
+                auto calendarioMap = listarPersonasPorCalendario(*personas);
+                std::cout << "\n=== Listado y conteo por calendario de declaración ===\n";
+                for (const auto& par : calendarioMap) {
+                    std::cout << "Calendario " << par.first << ": " << par.second.size() << " personas\n";
+                    for (const Persona* p : par.second) {
+                        p->mostrarResumen();
+                        std::cout << "\n";
+                    }
+                }
+
+                double tiempo_busqueda = monitor.detener_tiempo();
+                long memoria_busqueda = monitor.obtener_memoria() - memoria_inicio;
+                monitor.registrar("Buscar por ID", tiempo_busqueda, memoria_busqueda);
+                break;
+            }
+                
+            case 7: // Mostrar estadísticas de rendimiento
                 monitor.mostrar_resumen();
                 break;
                 
-            case 7: // Exportar estadísticas a CSV
+            case 8: // Exportar estadísticas a CSV
                 monitor.exportar_csv();
                 break;
                 
-            case 8: // Salir
+            case 9: // Salir
                 std::cout << "Saliendo...\n";
                 break;
                 
@@ -210,14 +233,14 @@ int main() {
                 std::cout << "Opción inválida!\n";
         }
         
-        // Mostrar estadísticas de la operación (excepto para opciones 6,7,8)
-        if (opcion >= 0 && opcion <= 5) {
+        // Mostrar estadísticas de la operación (excepto para opciones 7,8,9)
+        if (opcion >= 0 && opcion <= 6) {
             double tiempo = monitor.detener_tiempo();
             long memoria = monitor.obtener_memoria() - memoria_inicio;
             monitor.mostrar_estadistica("Opción " + std::to_string(opcion), tiempo, memoria);
         }
         
-    } while(opcion != 8);
+    } while(opcion != 9);
     
     return 0;
 }

@@ -3,6 +3,7 @@
 
 #include "persona.h"
 #include <vector>
+#include <map>
 
 // Funciones para generación de datos aleatorios
 
@@ -67,5 +68,7 @@ const Persona* buscarPorID(const std::vector<Persona>& personas, const std::stri
 const Persona* buscarLongevaCiudad(const std::vector<Persona>& personas, const std::string& ciudad);
 
 const Persona* buscarLongevaPais(const std::vector<Persona>& personas);
+
+std::map<char, std::vector<const Persona*>> listarPersonasPorCalendario(const std::vector<Persona>& personas);
 
 #endif // GENERADOR_H

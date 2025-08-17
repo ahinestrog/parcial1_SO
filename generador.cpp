@@ -4,6 +4,8 @@
 #include <random>    // std::mt19937, std::uniform_real_distribution
 #include <vector>
 #include <algorithm> // std::find_if
+#include <map>
+
 
 // Bases de datos para generación realista
 
@@ -192,4 +194,14 @@ const Persona* buscarLongevaPais(const std::vector<Persona>& personas){
 }
 
 
-//
+// Contar y listar personas según calendario
+std::map<char, std::vector<const Persona*>> listarPersonasPorCalendario(const std::vector<Persona>& personas) {
+    std::map<char, std::vector<const Persona*>> calendarioMap;
+
+    for (const auto& p : personas) {
+        char calendario = p.getCalendarioDeclaracion(); 
+        calendarioMap[calendario].push_back(&p);
+    }
+
+    return calendarioMap;
+}
