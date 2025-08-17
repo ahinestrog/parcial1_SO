@@ -172,7 +172,7 @@ const Persona* buscarLongevaCiudad(const std::vector<Persona>& personas, const s
     return longeva;    
 }
 
-
+// Búsqueda de persona más longeva por todo el país
 const Persona* buscarLongevaPais(const std::vector<Persona>& personas){
     const Persona* longeva = nullptr;
     int mayorEdad = -1;
@@ -190,3 +190,6 @@ const Persona* buscarLongevaPais(const std::vector<Persona>& personas){
 
     return longeva;    
 }
+
+
+//
