@@ -25,7 +25,7 @@ void mostrarMenu() {
     std::cout << "\n7. Mayor patrimonio en el país";
     std::cout << "\n8. Mayor patrimonio por ciudad";
     std::cout << "\n9. Mayor patrimonio por grupo de declaración";
-    std::cout << "\n10. Ciudad con mayores declarantes";
+    std::cout << "\n10. Ciudad con mayores declarantes por grupo de declaración";
     std::cout << "\n11. Promedio de ingresos declarantes por calendario";
     std::cout << "\n12. Edad promedio de las personas por ciudad de nacimiento";
     std::cout << "\n13. Mostrar estadísticas de rendimiento";
