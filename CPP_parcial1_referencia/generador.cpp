@@ -153,10 +153,16 @@ const Persona* buscarPorID(const std::vector<Persona>& personas, const std::stri
     }
 }
 
-//  Búsqueda de persona más longeva ciudad
+/**
+ * Implementación de buscarLongevaCiudad.
+ * 
+ * POR QUÉ: Encontrar la persona más longeva de una ciudad en una colección.
+ * CÓMO: Usando un algoritmo de búsqueda secuencial (lineal).
+ * PARA QUÉ: Para operaciones de búsqueda en la aplicación.
+ */
 const Persona* buscarLongevaCiudad(const std::vector<Persona>& personas, const std::string& ciudad){
-    const Persona* longeva = nullptr;
-    int mayorEdad = -1;
+    const Persona* longeva = nullptr; //Se inicializa como que no apunta a nada
+    int mayorEdad = -1; //Se inicializa con valor negativo, pues aún no se ha encontrado la person más longeva
 
     for (const Persona& p: personas){
         if (p.getCiudadNacimiento() == ciudad){
@@ -166,7 +172,7 @@ const Persona* buscarLongevaCiudad(const std::vector<Persona>& personas, const s
 
             if (edad > mayorEdad){
                 mayorEdad = edad;
-                longeva = &p;
+                longeva = &p; // Actualiza el puntero a la dirección de memoria de la persona más longeva en el momento.
             }
         }
     }
@@ -174,10 +180,18 @@ const Persona* buscarLongevaCiudad(const std::vector<Persona>& personas, const s
     return longeva;    
 }
 
+
+/**
+ * Implementación de buscarLongevaPais.
+ * 
+ * POR QUÉ: Encontrar la persona más longeva en una colección.
+ * CÓMO: Usando un algoritmo de búsqueda secuencial (lineal).
+ * PARA QUÉ: Para operaciones de búsqueda en la aplicación.
+ */
 // Búsqueda de persona más longeva por todo el país
 const Persona* buscarLongevaPais(const std::vector<Persona>& personas){
-    const Persona* longeva = nullptr;
-    int mayorEdad = -1;
+    const Persona* longeva = nullptr; //Se inicializa como que no apunta a nada
+    int mayorEdad = -1; //Se inicializa con valor negativo, pues aún no se ha encontrado la person más longeva
 
     for (const Persona& p: personas){
         std::string fecha = p.getFechaNacimiento();
@@ -186,41 +200,55 @@ const Persona* buscarLongevaPais(const std::vector<Persona>& personas){
 
         if (edad > mayorEdad) {
             mayorEdad = edad;
-            longeva = &p;
+            longeva = &p; // Actualiza el puntero a la dirección de memoria de la persona más longeva en el momento.
         }
     }
 
     return longeva;    
 }
 
+/**
+ * Implementación de mayorpatrimonioPais.
+ * 
+ * POR QUÉ: Encontrar la persona con mayor patrimonio en una colección.
+ * CÓMO: Usando un algoritmo de búsqueda secuencial (lineal).
+ * PARA QUÉ: Para operaciones de búsqueda en la aplicación.
+ */
 //Persona con mayor patrimonio
 const Persona* mayorpatrimonioPais(const std::vector<Persona>& personas){
-    const Persona* patrimonio = nullptr;
-    int mayorPatrimonio = -1;
+    const Persona* patrimonio = nullptr;  //Se inicializa como que no apunta a nada
+    int mayorPatrimonio = -1; //Se inicializa con valor negativo, pues aún no se ha encontrado la con mayor patrimonio
 
     for (const Persona& p: personas) {
         double npatrimonio = p.getPatrimonio();
         
         if (npatrimonio > mayorPatrimonio){
             mayorPatrimonio = npatrimonio;
-            patrimonio = &p;
+            patrimonio = &p; // Actualiza el puntero a la dirección de memoria de la persona con mayor patrimonio
         }
     }
 
     return patrimonio;
 }
 
+/**
+ * Implementación de mayorpatrimonioCiudad.
+ * 
+ * POR QUÉ: Encontrar la persona con mayor patrimonio de una ciudad en una colección.
+ * CÓMO: Usando un algoritmo de búsqueda secuencial (lineal).
+ * PARA QUÉ: Para operaciones de búsqueda en la aplicación.
+ */
 // Persona con mayor patrimonio por ciudad
 const Persona* mayorpatrimonioCiudad(const std::vector<Persona>& personas, const std::string ciudad){
-    const Persona* patrimonio = nullptr;
-    int mayorPatrimonio = -1;
+    const Persona* patrimonio = nullptr; //Se inicializa como que no apunta a nada
+    int mayorPatrimonio = -1;  //Se inicializa con valor negativo, pues aún no se ha encontrado la con mayor patrimonio
 
     for (const Persona& p: personas) {
         if ( ciudad == p.getCiudadNacimiento()){
             double npatrimonio = p.getPatrimonio();
             if (npatrimonio > mayorPatrimonio){
                 mayorPatrimonio = npatrimonio;
-                patrimonio = &p;
+                patrimonio = &p; // Actualiza el puntero a la dirección de memoria de la persona con mayor patrimonio
             }
 
         }
@@ -229,18 +257,24 @@ const Persona* mayorpatrimonioCiudad(const std::vector<Persona>& personas, const
     return patrimonio;
 }
 
-
+/**
+ * Implementación de mayorpatrimonioRenta.
+ * 
+ * POR QUÉ: Encontrar la persona con mayor patrimonio por grupo de declaración de renta.
+ * CÓMO: Usando un algoritmo de búsqueda secuencial (lineal).
+ * PARA QUÉ: Para operaciones de búsqueda en la aplicación.
+ */
 // Persona con mayor patrimonio por grupo declaración de renta
 const Persona* mayorpatrimonioRenta(const std::vector<Persona>& personas, const char calendarioRenta){
-    const Persona* patrimonio = nullptr;
-    int mayorPatrimonio = -1;
+    const Persona* patrimonio = nullptr; //Se inicializa como que no apunta a nada
+    int mayorPatrimonio = -1;  //Se inicializa con valor negativo, pues aún no se ha encontrado la con mayor patrimonio
 
     for (const Persona& p: personas) {
         if ( calendarioRenta == p.getCalendarioDeclaracion()){
             double npatrimonio = p.getPatrimonio();
             if (npatrimonio > mayorPatrimonio){
                 mayorPatrimonio = npatrimonio;
-                patrimonio = &p;
+                patrimonio = &p; // Actualiza el puntero a la dirección de memoria de la persona con mayor patrimonio
             }
 
         }
@@ -249,19 +283,32 @@ const Persona* mayorpatrimonioRenta(const std::vector<Persona>& personas, const 
     return patrimonio;
 }
 
-
+/**
+ * Implementación de listarPersonasPorCalendario.
+ * 
+ * POR QUÉ: Contar y listar personas según calendario de declaración de renta en una colección.
+ * CÓMO: Usando un algoritmo de mapeo (claves, valor) para tipo de calendario de renta.
+ * PARA QUÉ: Para operaciones de contar y listar en la aplicación.
+ */
 // Contar y listar personas según calendario
 std::map<char, std::vector<const Persona*>> listarPersonasPorCalendario(const std::vector<Persona>& personas) {
     std::map<char, std::vector<const Persona*>> calendarioMap;
 
     for (const auto& p : personas) {
         char calendario = p.getCalendarioDeclaracion(); 
-        calendarioMap[calendario].push_back(&p);
+        calendarioMap[calendario].push_back(&p); // Va al mapa con la clave "calendario" y añade al vector de punteros persona la dirección de la persona actual.
     }
 
     return calendarioMap;
 }
 
+/**
+ * Implementación de ciudadMayorDeclarantesCalendario.
+ * 
+ * POR QUÉ: Encontrar la ciudad con mayor número de declarantes en un calendario específico.
+ * CÓMO: Usando un algoritmo de búsqueda secuencial (lineal).
+ * PARA QUÉ: Para operaciones de búsqueda en la aplicación.
+ */
 // Ciudad con mayor número de declarantes en un calendario específico
 std::string ciudadMayorDeclarantesCalendario(const std::vector<Persona>& personas, const char calendarioRenta) {
     std::map<std::string, int> contadorCiudades;
@@ -276,15 +323,21 @@ std::string ciudadMayorDeclarantesCalendario(const std::vector<Persona>& persona
     int maxDeclarantes = -1;
     for (const auto& par : contadorCiudades) {
         if (par.second > maxDeclarantes) {
-            maxDeclarantes = par.second;
-            ciudadMayor = par.first;
+            maxDeclarantes = par.second; // La parte del valor del mapa son la cantidad de declarantes
+            ciudadMayor = par.first; // La parte de clave del mapa es la ciudad
         }
     }
 
     return ciudadMayor;
 }
 
-
+/**
+ * Implementación de promedioIngresosCalendario.
+ * 
+ * POR QUÉ: Saber el promedio de ingresos por calendario de declaración.
+ * CÓMO: Usando un algoritmo de consulta y cálculo secuencial (lineal).
+ * PARA QUÉ: Para operaciones de consulta y cálculo en la aplicación.
+ */
 // Promedio de ingresos por calendario de declaración
 double promedioIngresosCalendario(const std::vector<Persona>& personas, const char calendarioRenta) {
     double sumaIngresos = 0.0;
@@ -300,7 +353,13 @@ double promedioIngresosCalendario(const std::vector<Persona>& personas, const ch
     return (contador > 0) ? (sumaIngresos / contador) : 0.0;
 }
 
-
+/**
+ * Implementación de promedioEdadesCiudad.
+ * 
+ * POR QUÉ: Saber el promedio de edades de las personas nacidas en cada ciudad.
+ * CÓMO: Usando un algoritmo de consulta y cálculo secuencial (lineal).
+ * PARA QUÉ: Para operaciones de consulta y cálculo en la aplicación.
+ */
 // Edad promedio de las personas por ciudad de nacimiento
 double promedioEdadesCiudad(const std::vector<Persona>& personas, const std::string ciudad){
     double contadorEdades = 0.0;

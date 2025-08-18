@@ -285,7 +285,7 @@ int main() {
                 break;
             }
 
-            case 10: { // Ciudad con mayores declarantes
+            case 10: { // Ciudad con mayor número de declarantes en un calendario específico
                 if (!personas || personas->empty()) {
                     std::cout << "\nNo hay datos disponibles. Use opción 0 primero.\n";
                     break;
