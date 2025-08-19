@@ -223,6 +223,9 @@ int main() {
             case 15: printf("Saliendo...\n"); break;
             default: printf("Opción inválida!\n");
         }
+        double tiempo_total = detener_tiempo(&monitor);
+        long memoria_final = obtener_memoria() - memoria_inicio;
+        mostrar_estadistica(tiempo_total, memoria_final);
 
     } while(opcion != 15);
 

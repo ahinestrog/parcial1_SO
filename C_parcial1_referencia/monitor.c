@@ -80,9 +80,9 @@ void registrar(Monitor *m, const char *operacion, double tiempo, long memoria) {
 }
 
 // Muestra estadísticas de una operación
-void mostrar_estadistica(const char *operacion, double tiempo, long memoria) {
-    printf("\n[ESTADÍSTICAS] %s - Tiempo: %.3f ms, Memoria: %ld KB\n",
-           operacion, tiempo, memoria);
+void mostrar_estadistica(double tiempo, long memoria) {
+    printf("\n[ESTADÍSTICAS] - Tiempo: %.3f ms, Memoria: %ld KB\n",
+           tiempo, memoria);
 }
 
 // Muestra resumen de todas las operaciones

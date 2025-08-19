@@ -32,7 +32,7 @@ long obtener_memoria();
 
 // Registro de métricas
 void registrar(Monitor *m, const char *operacion, double tiempo, long memoria);
-void mostrar_estadistica(const char *operacion, double tiempo, long memoria);
+void mostrar_estadistica(double tiempo, long memoria);
 void mostrar_resumen(Monitor *m);
 void exportar_csv(Monitor *m, const char *nombre_archivo);
 
